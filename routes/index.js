@@ -6,9 +6,13 @@ var PythonShell = require('python-shell');
 router.get('/', function(req, res, next) {
 	
 	
-	PythonShell.run('hamtest.py', function(err, response){
+	var options = {
+		mode: 'json'
+	}
+
+	PythonShell.run('humid_temp.py', options, function(err, response){
 		if (err) throw err;
-		outputmsg = (response * 9/5)+ 32;
+		outputmsg = response[0].temperature;
 		console.log(outputmsg);
 		res.render('index', { title: outputmsg });
 		console.log('temp rendered');
