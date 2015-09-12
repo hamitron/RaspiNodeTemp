@@ -4,17 +4,21 @@ var PythonShell = require('python-shell');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var pyshell = new PythonShell('faketemp.py');
+	var pyshell = new PythonShell('hamtest.py');
 	
 	pyshell.send('');
 	
 	var outputmsg;
 	pyshell.on('message', function(message){
-		console.log(message);
-		outputmsg = message;
+		outputmsg = (message * 9/5)+ 32;
+		console.log(outputmsg);
 		res.render('index', { title: outputmsg });
 	});
-
+	
+	pyshell.end(function(err){
+		if (err) throw err;
+		console.log('temp rendered');
+	});
   
 });
 
